@@ -18,13 +18,13 @@ class StudentFactory extends Factory
      */
     public function definition(): array
     {
-        $faker = faker::create();
+        // $faker = faker::create();
 
-        return [
-        'name' => $faker ->name(),
-        'gender' => Arr::random(['L', 'P']),
-        'nis' => mt_rand(0000001, 9999999),
-        'class_id' => Arr::random([1 ,2 ,3 ,4]),
-        ];
+        // return [
+        // 'name' => $faker ->name(),
+        // 'gender' => Arr::random(['L', 'P']),
+        // 'nis' => mt_rand(0000001, 9999999),
+        // 'class_id' => Arr::random([1 ,2 ,3 ,4]),
+        // ];
     }
 }
