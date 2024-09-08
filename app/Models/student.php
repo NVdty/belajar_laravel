@@ -14,6 +14,12 @@ class student extends Model
     {
         return $this->belongsTo(ClassRoom::class);
     }
+
+    //many to many relation
+    public function extracurriculars()
+    {
+        return $this->belongsToMany(Extracurricular::class, 'student_extracurricular', 'student_id', 'extracurricular_id');
+    }
     // // protected $table = 'students';
     // protected $fillable = [
     //     'name', 'gender', 'nis', 'class_id'

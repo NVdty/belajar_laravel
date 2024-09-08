@@ -15,7 +15,8 @@ class StudentController extends Controller
         // return view('student', ['studentList'=> $student]);
     
     //eager loading (relation)
-    $student = Student::with('class')->get(); //select * from students
+    //many to many
+    $student = Student::with(['class', 'extracurriculars'])->get(); //select * from students
     return view('student', ['studentList'=> $student]);
     
 
