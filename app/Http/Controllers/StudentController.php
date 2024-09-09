@@ -16,8 +16,17 @@ class StudentController extends Controller
     
     //eager loading (relation)
     //many to many
-    $student = Student::with(['class', 'extracurriculars'])->get(); //select * from students
+    //bagian class.homeroomTeacher = nested relation
+    $student = Student::get(); //select * from students
     return view('student', ['studentList'=> $student]);
+    }
+
+    public function show($id){
+        $student = Student::with(['class.homeroomTeacher', 'extracurriculars'])
+        ->findOrFail($id);
+        return view('student-detail', ['student'=> $student]);
+    }
+ }
     
 
     
@@ -79,5 +88,3 @@ class StudentController extends Controller
 
     //delete eloquent
         // student::find(29)->delete();
-    }
-}

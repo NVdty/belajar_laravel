@@ -17,11 +17,18 @@ class ClassController extends Controller
         //select * from student where class =  1C
 
         //eager loading
-        $class = ClassRoom::with('students')->get() ;
+        $class = ClassRoom::get() ;
         //select * from table class
         //select * from student where class in (1A, 1B, 1C)
         //semua load harus memanggil data di view class 
         
         return view('classroom', ['classList'=> $class]);
+    }
+
+    public function show($id){
+        $class = ClassRoom::with(['students','homeroomTeacher'])
+        ->findOrFail($id);
+        return view('class-detail', ['class'=> $class]);
+
     }
 }
