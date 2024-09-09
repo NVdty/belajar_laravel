@@ -9,6 +9,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class student extends Model
 {
     use HasFactory;
+
+    //syarat mass asignment
+    protected $fillable= [
+        'name',
+        'gender',
+        'nis',
+        'class_id',
+    ];
     
     public function class()
     {
