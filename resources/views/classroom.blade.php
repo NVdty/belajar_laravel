@@ -3,12 +3,14 @@
 @section('title', 'ClassRoom')
 
 @section('content')
+
     <h1> halaman Class</h1>
+
     <div class="my-5">
         <a href=""class="btn btn-primary">Add Data</a>
     </div>
      <h3>Class List</h3>
-  <table class=table>
+  <table class=table> 
    <thead>
     <tr>
         <th> No. </th>

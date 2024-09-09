@@ -31,4 +31,5 @@ class ClassController extends Controller
         return view('class-detail', ['class'=> $class]);
 
     }
+
 }
