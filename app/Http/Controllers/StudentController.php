@@ -6,6 +6,7 @@ use App\Models\student;
 use App\Models\ClassRoom;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class StudentController extends Controller
 {
@@ -37,6 +38,10 @@ class StudentController extends Controller
 
         // menambah data baru ke datbase dg mass asignment 
        $student= Student::create($request->all());
+       if($student) {
+        Session::flash('status', 'success');
+        Session::flash('message', 'add new students success!');
+       }
        return redirect('/students');
     }
 
