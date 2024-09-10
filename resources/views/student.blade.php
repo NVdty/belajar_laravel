@@ -5,8 +5,9 @@
 @section('content')
     <h1> halaman student</h1>
 
-    <div class="my-5">
+    <div class="my-5 d-flex justify-content-between">
         <a href="/student-add"class="btn btn-primary">Add Data</a>
+        <a href="/student-deleted" class="btn btn-info">Show Deleted Data</a>
     </div>
 
     @if(Session::has('status'))
@@ -35,6 +36,7 @@
                 <td>{{$data->nis}}</td>
                 <td><a href="student/{{$data->id}}"> Detail</a></td>
                 <td><a href="/student-edit/{{$data->id}}"> Edit </a></td>
+                <td><a href="/student-delete/{{$data->id}}">Delete</a></td>
             </tr>
             @endforeach
         </tbody>

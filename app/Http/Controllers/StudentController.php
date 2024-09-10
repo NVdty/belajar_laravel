@@ -7,6 +7,7 @@ use App\Models\ClassRoom;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use App\Http\Requests\StudentCreateRequest;
 
 class StudentController extends Controller
 {
@@ -30,11 +31,18 @@ class StudentController extends Controller
     }
 
     public function create(){
+      //eloquent read
         $class = ClassRoom::select('id', 'name')->get();
         return view('student-add',['class' => $class]);
     }
 
-    public function store(Request $request){
+    public function store(StudentCreateRequest $request){ //memanggil validate file
+
+        // // $validated = $request->validate ([
+        // //     // 'nis' => 'unique:students|max:8', // validated pindah ke StudentCreateRequest
+        // //     // 'name' => 'max:50'
+        // ]);
+
 
         // menambah data baru ke datbase dg mass asignment 
        $student= Student::create($request->all());
@@ -46,19 +54,51 @@ class StudentController extends Controller
     }
 
     public function edit(Request $request, $id){
-        
+        //eloquent update
         $student = Student::with('class')->findOrFail($id);
         $class = ClassRoom::where('id','!=', $student->class_id)->get(['id', 'name']);
         return view('student-edit', ['student' => $student], ['class' => $class]);
     }
 
     public function update(Request $request, $id){
+        //eloquent updt
         $student =Student::findOrFail($id);
 
+        
         $student->update($request->all());
         return redirect('/students');
     }
-} 
+
+    public function delete($id){
+        //eloquent delete
+        $student =Student::findOrFail($id);
+        return view('student-delete', ['student' => $student]);
+    }
+
+    public function destroy($id){
+        //eloquent delete
+        $deletedStudent = student::findOrFail($id);
+        $deletedStudent->delete();
+
+            if($deletedStudent) {
+            Session::flash('status', 'success');
+            Session::flash('message', 'delete student success!');
+           }
+
+        return redirect('/students');
+    }
+
+    public function deletedStudent(){
+
+        $deletedStudent = Student::onlyTrashed()->get();
+        return view('student-deleted-list',['student'=> $deletedStudent]);
+    }
+
+    public function restore($id){
+        $deletedStudent = Student::withTrashed()->where('id', $id)->restore();
+        return redirect('/students');
+    }
+}   
     
 
     
