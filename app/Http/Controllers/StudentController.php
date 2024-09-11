@@ -47,22 +47,33 @@ class StudentController extends Controller
         return view('student-add',['class' => $class]);
     }
 
-    public function store(StudentCreateRequest $request){ //memanggil validate file
+    public function store(StudentCreateRequest $request){
+
+        $newName = '';
+
+        if($request->file('photo')){
+            $extension = $request->file('photo')->getClientOriginalExtension();
+            $newName = $request->name.'-'.now()->timestamp.'.'.$extension; //fitur upload foto dg nama dan waktu(berbeda)
+            $request->file('photo')->storeAs('photo', $newName);
+        }
 
         // // $validated = $request->validate ([
         // //     // 'nis' => 'unique:students|max:8', // validated pindah ke StudentCreateRequest
         // //     // 'name' => 'max:50'
         // ]);
 
-
         // menambah data baru ke datbase dg mass asignment 
-       $student= Student::create($request->all());
-       if($student) {
-        Session::flash('status', 'success');
-        Session::flash('message', 'add new students success!');
-       }
+        $request['image']= $newName;
+        $student= Student::create($request->all());
+       //flash session(notif)
+       if($student){
+            Session::flash('status', 'success');
+            Session::flash('message', 'add new students success!');
+        }
+
        return redirect('/students');
     }
+
 
     public function edit(Request $request, $id){
         //eloquent update

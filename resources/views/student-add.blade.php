@@ -17,7 +17,7 @@
     </div>
     @endif
 
-<form action="student" method="post">
+<form action="student" method="post" enctype="multipart/form-data"> <!-- gunakan enctype untuk upload photo/image-->
     @csrf
     <div class="mb-3">
         <label for="name"> Name</label>
@@ -47,6 +47,14 @@
                 
             @endforeach
         </select>
+    </div>
+
+    <!-- form upload photo-->
+    <div class="mb-3">
+        <label for="photo">Photo</label>
+        <div class="input-group">
+            <input type="file" class="form-control" id="photo" name="photo">
+          </div>
     </div>
 
     <div class="mb-3">
