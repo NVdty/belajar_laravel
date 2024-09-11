@@ -11,7 +11,7 @@ use App\Http\Requests\StudentCreateRequest;
 
 class StudentController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         
     //lazy loading (relation)
         // $student = Student::all(); //select * from students
@@ -20,7 +20,18 @@ class StudentController extends Controller
     //eager loading (relation)
     //many to many
     //bagian class.homeroomTeacher = nested relation
-    $student = Student::get(); //select * from students
+
+    $keyword = $request->keyword; //fitur search dengan paginate
+    //paginate membatasi data yang tampil pada halaman page
+    $student = Student::with('class') // search relasi 
+                    ->where('name', 'LIKE', '%'.$keyword. '%') //select * from students
+                    ->orWhere('gender', $keyword)
+                    ->orWhere('nis', 'LIKE', '%'.$keyword.'%')
+                    ->orWhereHas('class', function($query) use ($keyword){ // use keyword untuk dapat menggunakan/dpt dikenali $keyword karna didalam query
+                        $query->where('name', 'LIKE', '%'.$keyword.'%');
+                    })
+                    ->paginate(10);
+
     return view('student', ['studentList'=> $student]);
     }
 

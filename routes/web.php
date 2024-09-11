@@ -21,7 +21,6 @@ Route::get('/home', function () {
     return view('home', [
         'name'=> 'nvdty',
         'role'=> 'admin',
-        'buah'=>['pisang','apel','jeruk', 'semangka', 'kiwi']
 ]);
 });
 
