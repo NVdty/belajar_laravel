@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Controllers\ExtracurricularController;
 
 /*
@@ -25,6 +26,12 @@ Route::get('/', function () {
 //login
 Route::get('/login', [AuthController::class, 'login'])->name('login')->middleware('guest');
 Route::post('/login', [AuthController::class, 'authenticating']);
+// Route::get('/logins', function () {
+//         return view('/');
+//         })->middleware(RedirectIfAuthenticated::class);
+
+Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth');
+
 
 Route::middleware(['auth'])->group(function () {
 

@@ -13,6 +13,7 @@ class AuthController extends Controller
         return view('login');
     }
 
+    // validasi untuk login
     public function authenticating(Request $request){
 
         $credentials = $request->validate([
@@ -26,10 +27,20 @@ class AuthController extends Controller
             return redirect()->intended('/'); //jika berhasil
         }
         Session::flash('status', 'failed');
-        Session::flash('message', 'Failed Logim!');
+        Session::flash('message', 'Failed Login!');
 
         return redirect('/login'); //jika gagal
 
+    }
+
+    // //untuk logout
+    public function logout(Request $request){
+
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+    
+        return redirect('/login');
     }
 
 }
