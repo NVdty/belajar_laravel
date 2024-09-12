@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
@@ -17,30 +18,37 @@ use App\Http\Controllers\ExtracurricularController;
 |
 */
 
-Route::get('/home', function () {
-    return view('home', [
-        'name'=> 'nvdty',
-        'role'=> 'admin',
-]);
+Route::get('/', function () {
+    return view('home');
+}); 
+
+//login
+Route::get('/login', [AuthController::class, 'login'])->name('login')->middleware('guest');
+Route::post('/login', [AuthController::class, 'authenticating']);
+
+Route::middleware(['auth'])->group(function () {
+
+//student
+    Route::get('/students', [StudentController::class, 'index']);
+    Route::get('/student/{id}', [StudentController::class, 'show']);
+    Route::get('/student-add', [StudentController::class, 'create']);
+    Route::post('/student', [StudentController::class, 'store']);
+    Route::get('/student-edit/{id}', [StudentController::class, 'edit']);
+    Route::put('/student/{id}', [StudentController::class, 'update']);
+    Route::get('/student-delete/{id}', [StudentController::class, 'delete']);
+    Route::delete('/student-destroy/{id}', [StudentController::class, 'destroy']);
+    Route::get('/student-deleted', [StudentController::class, 'deletedStudent']);
+    Route::get('/student/{id}/restore', [StudentController::class, 'restore']);
+    
+ //class 
+    Route::get('/class', [ClassController::class, 'index']);
+    Route::get('/class-detail/{id}', [ClassController::class, 'show']);
+    
+//extracurricular
+    Route::get('/extracurricular', [ExtracurricularController::class, 'index']);
+    Route::get('/extracurricular-detail/{id}', [ExtracurricularController::class, 'show']);
+   
+//teacher
+    Route::get('/teacher', [TeacherController::class, 'index']);
+    Route::get('/teacher-detail/{id}', [TeacherController::class, 'show']);
 });
-
-Route::get('/students', [StudentController::class, 'index']);
-Route::get('/student/{id}', [StudentController::class, 'show']);
-Route::get('/student-add', [StudentController::class, 'create']);
-Route::post('/student', [StudentController::class, 'store']);
-Route::get('/student-edit/{id}', [StudentController::class, 'edit']);
-Route::put('/student/{id}', [StudentController::class, 'update']);
-Route::get('/student-delete/{id}', [StudentController::class, 'delete']);
-Route::delete('/student-destroy/{id}', [StudentController::class, 'destroy']);
-Route::get('/student-deleted', [StudentController::class, 'deletedStudent']);
-Route::get('/student/{id}/restore', [StudentController::class, 'restore']);
-
-Route::get('/class', [ClassController::class, 'index']);
-Route::get('/class-detail/{id}', [ClassController::class, 'show']);
-
-
-Route::get('/extracurricular', [ExtracurricularController::class, 'index']);
-Route::get('/extracurricular-detail/{id}', [ExtracurricularController::class, 'show']);
-
-Route::get('/teacher', [TeacherController::class, 'index']);
-Route::get('/teacher-detail/{id}', [TeacherController::class, 'show']);

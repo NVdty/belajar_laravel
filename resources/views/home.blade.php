@@ -3,34 +3,35 @@
 @section('content')
 
     <h1> homepage</h1>
-    <h2>welcome, {{$name}}. anda adalah {{$role}}</h2>
+    <h2> welcome {{Auth::user()->name}}, login as {{Auth::user()->role->name}}</h2>
+
 
    
     @endsection
 
 
      <!--if else
-    @if ($role=='admin')
+    {{-- @if ($role=='admin') --}}
         <a href="">ke halaman admin</a>
-    @elseif ($role=='staff')
+    {{-- @elseif ($role=='staff') --}}
         <a href=""> ke halaman staff</a>
-    @endif -->
+    {{-- @endif --> --}}
 
-   <!--switch-case
-     @switch($role)
-        @case($role=='admin')
+   switch-case
+     {{-- @switch($role) --}}
+        {{-- @case($role=='admin') --}}
         <a href="">ke halaman admin</a>
-        @break
+        {{-- @break --}}
 
-        @case($role=='staff')
+        {{-- @case($role=='staff') --}}
         <a href="">ke halaman staff</a>
-        @break
+        {{-- @break --}}
 
-        @default
+        {{-- @default --}}
         <a href="">tidak ada</a>
 
-    @endswitch -->
+    {{-- @endswitch --> --}}
 
-   <!-- @for($i = 0; $i < 5; $i++)
-    {{$i}} <br>
-    @endfor -->
+   {{-- <!-- @for($i = 0; $i < 5; $i++) --}}
+    {{-- {{$i}} <br> --}}
+    {{-- @endfor --> --}}
