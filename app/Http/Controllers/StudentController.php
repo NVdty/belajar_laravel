@@ -65,7 +65,6 @@ class StudentController extends Controller
 
         // menambah data baru ke datbase dg mass asignment 
         $request['image'] = $newName;
-        $request['slug'] = Str::slug($request->name, '-');
         $student= Student::create($request->all());
        //flash session(notif)
        if($student){
