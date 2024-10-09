@@ -59,3 +59,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/teacher', [TeacherController::class, 'index']);
     Route::get('/teacher-detail/{id}', [TeacherController::class, 'show']);
 });
+// untuk mengisi data null/ update secara masal
+// Route::get('/student-mass-update', [StudentController::class, 'massUpdate']);

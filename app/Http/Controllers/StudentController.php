@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\student;
 use App\Models\ClassRoom;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -35,9 +36,9 @@ class StudentController extends Controller
     return view('student', ['studentList'=> $student]);
     }
 
-    public function show($id){
+    public function show($slug){
         $student = Student::with(['class.homeroomTeacher', 'extracurriculars'])
-        ->findOrFail($id);
+        ->where('slug',$slug)->first();
         return view('student-detail', ['student'=> $student]);
     }
 
@@ -63,7 +64,8 @@ class StudentController extends Controller
         // ]);
 
         // menambah data baru ke datbase dg mass asignment 
-        $request['image']= $newName;
+        $request['image'] = $newName;
+        $request['slug'] = Str::slug($request->name, '-');
         $student= Student::create($request->all());
        //flash session(notif)
        if($student){
@@ -120,6 +122,15 @@ class StudentController extends Controller
         $deletedStudent = Student::withTrashed()->where('id', $id)->restore();
         return redirect('/students');
     }
+    // untuk mengisi data null/update data secara masal
+    // public function massUpdate()
+    // {
+    //     $student = Student::whereNull('slug')->get();
+    //     collect($student)->map(function($item){
+    //         $item->slug = Str::slug($item->name, '-');
+    //         $item->save();
+    //     });
+    // }
 }   
     
 
