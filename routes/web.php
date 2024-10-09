@@ -21,11 +21,11 @@ use App\Http\Controllers\ExtracurricularController;
 
 Route::get('/', function () {
     return view('home');
-}); 
+})->middleware('auth'); 
 
 //login
 Route::get('/login', [AuthController::class, 'login'])->name('login')->middleware('guest');
-Route::post('/login', [AuthController::class, 'authenticating']);
+Route::post('/login', [AuthController::class, 'authenticating'])->middleware('guest');
 // Route::get('/logins', function () {
 //         return view('/');
 //         })->middleware(RedirectIfAuthenticated::class);

@@ -6,6 +6,8 @@
     <h2> welcome {{Auth::user()->name}}, login as {{Auth::user()->role->name}}</h2>
 
 
+
+    <x-alert message='home page' type='primary'/>
    
     @endsection
 

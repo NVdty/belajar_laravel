@@ -46,7 +46,12 @@
                 <td>{{$data->gender}}</td>
                 <td>{{$data->nis}}</td>
                 <td>{{$data->class->name}}</td>
+
+                {{-- @if(Auth::user()->role_id !=1 && Auth::user()->roled_id !=2)
+                -
+                @else --}} <!--untuk menghide dari user yang tidak berhak, sebelum ini, daftarkan role 1 dan 2 pada auth-->
                 <td><a href="student/{{$data->id}}"> Detail</a></td>
+                {{-- @endif --}}
                 <td><a href="/student-edit/{{$data->id}}"> Edit </a></td>
                 <td><a href="/student-delete/{{$data->id}}">Delete</a></td>
             </tr>
@@ -59,5 +64,6 @@
         {{$studentList->withQueryString()->links()}} <!--withquery agar page selanjutnya pencarian tetap sama seperti page1-->
         
         </div>
-    
+    <x-alert message='student page' type='success'/>
+
 @endsection
